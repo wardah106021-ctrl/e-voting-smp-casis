@@ -88,17 +88,17 @@ function risetUlangFormKeAwal() {
 function aksesPanelAdmin() {
     const inputPassword = prompt("Masukkan Kata Sandi Otoritas Admin OSIS:");
 
-    if (inputPassword === PASSWORD_ADMIN_RAHASIA) {
+    if (inputPassword === null) return; 
+
+    if (inputPassword.trim() === "adminrpl123") {
         alert("Akses Diterima! Menghubungkan ke sinkronisasi online.");
         
         document.getElementById("layar-login").classList.add("sembunyi");
         document.getElementById("layar-voting").classList.add("sembunyi");
         document.getElementById("layar-admin").classList.remove("sembunyi");
 
-        // AKSIKAN RADAR PENGAMAT LIVE DATA (.on)
         database.ref().on('value', function(snapshot) {
             const semuaData = snapshot.val() || {};
-            
             const dataSuaraServer = semuaData.dataSuara || { kandidat1: 0, kandidat2: 0 };
             const logPemilihServer = semuaData.logDaftarPemilih || {};
 
@@ -106,7 +106,7 @@ function aksesPanelAdmin() {
             renderTabelLive(logPemilihServer);
         });
 
-    } else if (inputPassword !== null) {
+    } else {
         alert("Akses Ditolak! Kata sandi salah.");
     }
 }
